@@ -10,8 +10,10 @@ type WaitGroupWrapper struct {
 
 func (w *WaitGroupWrapper) Wrap(cb func()) {
 	w.Add(1)
+
 	go func() {
+		defer w.Done()
+
 		cb()
-		w.Done()
 	}()
 }
